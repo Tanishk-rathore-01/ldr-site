@@ -306,7 +306,7 @@ function showQuote(){
 // calculate by comparing dates (UTC) so timezone differences don't skew the result
 // include the starting day as day 1
 function updateDays(){
-  const startDate=new Date(2026,2,2); // months are 0-indexed (2 = March)
+  const startDate=new Date(2026,1,23); // months are 0-indexed (1 = February, 23rd)
   const today=new Date();
   const utcStart=Date.UTC(startDate.getFullYear(),startDate.getMonth(),startDate.getDate());
   const utcToday=Date.UTC(today.getFullYear(),today.getMonth(),today.getDate());
