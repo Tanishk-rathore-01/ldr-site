@@ -303,12 +303,20 @@ function showQuote(){
 }
 
 /* days counter */
-// use ISO dates for consistent parsing and calculate based on current time
-const startDate=new Date("2026-03-02T00:00:00");
-const today=new Date(); // now
-const diff = today - startDate;
-const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-document.getElementById("days").innerText = days;
+// calculate by comparing dates (UTC) so timezone differences don't skew the result
+// include the starting day as day 1
+function updateDays(){
+  const startDate=new Date(2026,2,2); // months are 0-indexed (2 = March)
+  const today=new Date();
+  const utcStart=Date.UTC(startDate.getFullYear(),startDate.getMonth(),startDate.getDate());
+  const utcToday=Date.UTC(today.getFullYear(),today.getMonth(),today.getDate());
+  const diffMs = utcToday - utcStart;
+  const daysCount = Math.floor(diffMs / (1000 * 60 * 60 * 24)) + 1;
+  document.getElementById("days").innerText = daysCount;
+}
+updateDays();
+// also update periodically in case the page stays open across midnight
+setInterval(updateDays, 60*1000);
 
 /* distance */
 const you={lat:28.6692,lon:-77.4538}; 
